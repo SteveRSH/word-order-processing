@@ -5,13 +5,13 @@ import java.util.Scanner;
 public class Creator {
     public void createWorkOrders() throws InterruptedException {
         // read input, create work orders and write as json files
-        Scanner input = new Scanner(System.in);
-        String requestor = input.nextLine();
+        Scanner input = new Scanner(System.in); //creating a scanner object
+
         System.out.println("******* WELCOME TO THE WORK ORDER CREATOR *******");
 
         while(true) {
             System.out.println("WHO IS REQUESTING THIS WORK ORDER?");
-
+            String requestor = input.nextLine();
             System.out.println("THANK YOU.");
 
             System.out.println("WHAT DO YOU WISH FOR?");

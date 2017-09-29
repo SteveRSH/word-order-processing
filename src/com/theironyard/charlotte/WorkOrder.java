@@ -27,28 +27,31 @@ public class WorkOrder {
 
         this.description = description;
         this.senderName = senderName;
+
+//        persist();
     }
 
-    private void persist() {
-        ObjectMapper mapper = new ObjectMapper()
+    public void persist() {
+        ObjectMapper mapper = new ObjectMapper();
 
-        try {
-            // save object json string to disk.
-            File f = new File(this.id + ".jn");
-            FileWriter fw = new FileWriter(f);
+    try {
+        //try is used in case something happens and if it does it goes to the catch
+        // save object json string to disk.
+        File f = new File(this.id + ".json");
+        FileWriter fw = new FileWriter(f);
 
-            // convert our object to json..
-            String objString = mapper.writeValueAsString(new WorkOrder()) + "pants";
+        // convert our object to json..
+        String objString = mapper.writeValueAsString(this);
 
-            // write this object, as json,
-            // to the file using our file writer.
-            fw.append(objString);
+        // write this object, as json,
+        // to the file using our file writer.
+        fw.append(objString);
 
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        fw.close();
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
 
     public int getId() {
         return id;

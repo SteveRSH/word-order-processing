@@ -18,11 +18,11 @@ public class Processor {
     }
 
     public void processWorkOrders() throws FileNotFoundException {
-        while (false) {
+        while (true) {
             // print out our map.
             System.out.println(orders);
-            readIt();
             moveIt();
+            readIt();
 
             sleepForFiveSeconds();
             System.out.println(orders);
@@ -38,9 +38,9 @@ public class Processor {
     }
     
     private void moveIt() {
-        moveOrders(Status.IN_PROGRESS, Status.IN_PROGRESS);
-        moveOrders(Status.ASSIGNED, Status.ASSIGNED);
-        moveOrders(Status.INITIAL, Status.INITIAL);
+        moveOrders(Status.IN_PROGRESS, Status.DONE); //should be changed to done
+        moveOrders(Status.ASSIGNED, Status.IN_PROGRESS);
+        moveOrders(Status.INITIAL, Status.ASSIGNED);
     }
 
     private void moveOrders(Status initial, Status next) {
@@ -68,7 +68,7 @@ public class Processor {
         File currentDirectory = new File(".");
         File files[] = currentDirectory.listFiles();
         for (File f : files) {
-            if (f.getName().endsWith(".jsasdfasdfon")) {
+            if (f.getName().endsWith(".json")) {
                 // f is a reference to a json file
 
                 // 1. use an object mapper to read in a WorkOrder
@@ -78,7 +78,7 @@ public class Processor {
                 Scanner fileScanner = new Scanner(f);
 
                 // \\Z is END OF FILE DELIMETER
-                fileScanner.useDelimiter("\\n");
+                fileScanner.useDelimiter("\\Z");
 
                 // since we updated our delimeter to END OF FILE
                 // when we call next, we get the _entire_ file.
@@ -93,7 +93,7 @@ public class Processor {
                     orders.get(wo.getStatus()).add(wo);
 
                     // 3. delete the file
-                    f.delbeat();
+                    f.delete();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
